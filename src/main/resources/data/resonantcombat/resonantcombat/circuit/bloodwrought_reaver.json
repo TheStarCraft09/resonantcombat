@@ -1,0 +1,15 @@
+{
+  "weapon_class": "resonantcombat:broadblade",
+  "weight": 30,
+  "tier": "advanced",
+  "tags": [
+    "berserker",
+    "risk"
+  ],
+  "basic_combo": "resonantcombat:butchers_march",
+  "heavy_profile": "resonantcombat:brutal_forward_chop",
+  "plunge_profile": "resonantcombat:broadblade_plunge",
+  "resonance_skill": "resonantcombat:war_cry",
+  "ultimate": "resonantcombat:unbroken_fury",
+  "allowed_epicfight_types": []
+}

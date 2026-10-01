@@ -1,0 +1,14 @@
+{
+  "weapon_class": "resonantcombat:bow",
+  "weight": 30,
+  "tier": "advanced",
+  "tags": [
+    "mark"
+  ],
+  "basic_combo": "resonantcombat:marked_precision",
+  "heavy_profile": "resonantcombat:explosive_brand_arrow",
+  "plunge_profile": "resonantcombat:bow_plunge",
+  "resonance_skill": "resonantcombat:hunters_mark",
+  "ultimate": "resonantcombat:solar_ruin",
+  "allowed_epicfight_types": []
+}

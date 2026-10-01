@@ -1,0 +1,15 @@
+{
+  "weapon_class": "resonantcombat:saber",
+  "weight": 60,
+  "tier": "standard",
+  "tags": [
+    "evasion",
+    "aerial"
+  ],
+  "basic_combo": "resonantcombat:petal_dance",
+  "heavy_profile": "resonantcombat:leaping_vertical_slash",
+  "plunge_profile": "resonantcombat:saber_plunge",
+  "resonance_skill": "resonantcombat:petal_step",
+  "ultimate": "resonantcombat:thousand_petals",
+  "allowed_epicfight_types": []
+}

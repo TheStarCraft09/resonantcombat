@@ -1,0 +1,15 @@
+{
+  "weapon_class": "resonantcombat:sword",
+  "weight": 60,
+  "tier": "standard",
+  "tags": [
+    "aggressive",
+    "finisher"
+  ],
+  "basic_combo": "resonantcombat:ember_march",
+  "heavy_profile": "resonantcombat:delayed_execution_slash",
+  "plunge_profile": "resonantcombat:sword_plunge",
+  "resonance_skill": "resonantcombat:brand_cutter",
+  "ultimate": "resonantcombat:sovereign_break",
+  "allowed_epicfight_types": []
+}

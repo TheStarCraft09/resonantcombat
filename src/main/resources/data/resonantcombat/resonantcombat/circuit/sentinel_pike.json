@@ -1,0 +1,15 @@
+{
+  "weapon_class": "resonantcombat:spear",
+  "weight": 60,
+  "tier": "standard",
+  "tags": [
+    "defensive",
+    "zone"
+  ],
+  "basic_combo": "resonantcombat:guardline_sweep",
+  "heavy_profile": "resonantcombat:braced_counter_thrust",
+  "plunge_profile": "resonantcombat:spear_plunge",
+  "resonance_skill": "resonantcombat:hold_the_line",
+  "ultimate": "resonantcombat:impenetrable_formation",
+  "allowed_epicfight_types": []
+}

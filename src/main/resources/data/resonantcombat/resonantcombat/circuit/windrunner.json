@@ -1,0 +1,15 @@
+{
+  "weapon_class": "resonantcombat:bow",
+  "weight": 60,
+  "tier": "standard",
+  "tags": [
+    "mobility",
+    "ranged"
+  ],
+  "basic_combo": "resonantcombat:swiftshot_chain",
+  "heavy_profile": "resonantcombat:piercing_gale_arrow",
+  "plunge_profile": "resonantcombat:bow_plunge",
+  "resonance_skill": "resonantcombat:gale_dash",
+  "ultimate": "resonantcombat:tempest_barrage",
+  "allowed_epicfight_types": []
+}

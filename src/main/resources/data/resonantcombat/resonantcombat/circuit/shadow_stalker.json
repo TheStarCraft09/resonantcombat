@@ -1,0 +1,14 @@
+{
+  "weapon_class": "resonantcombat:bow",
+  "weight": 60,
+  "tier": "standard",
+  "tags": [
+    "stealth"
+  ],
+  "basic_combo": "resonantcombat:ambush_volley",
+  "heavy_profile": "resonantcombat:vanishing_shot",
+  "plunge_profile": "resonantcombat:bow_plunge",
+  "resonance_skill": "resonantcombat:veil_step",
+  "ultimate": "resonantcombat:nightfall_hunt",
+  "allowed_epicfight_types": []
+}

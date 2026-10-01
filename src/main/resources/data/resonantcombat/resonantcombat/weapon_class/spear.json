@@ -1,0 +1,24 @@
+{
+  "icon": "minecraft:trident",
+  "order": 2,
+  "epicfight_categories": [
+    "spear",
+    "trident",
+    "pike"
+  ],
+  "starter_kit": [
+    {
+      "items": [
+        "epicfight:iron_spear",
+        "minecraft:trident"
+      ],
+      "count": 1
+    },
+    {
+      "items": [
+        "minecraft:bread"
+      ],
+      "count": 8
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "values": {
+    "minecraft:trident": {
+      "weapon_class": "resonantcombat:spear"
+    },
+    "minecraft:mace": {
+      "weapon_class": "resonantcombat:broadblade"
+    }
+  }
+}

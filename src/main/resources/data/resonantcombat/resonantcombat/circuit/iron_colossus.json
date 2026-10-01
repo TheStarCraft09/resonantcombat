@@ -1,0 +1,14 @@
+{
+  "weapon_class": "resonantcombat:broadblade",
+  "weight": 60,
+  "tier": "standard",
+  "tags": [
+    "defensive"
+  ],
+  "basic_combo": "resonantcombat:fortress_cleave",
+  "heavy_profile": "resonantcombat:armored_shoulder_crash",
+  "plunge_profile": "resonantcombat:broadblade_plunge",
+  "resonance_skill": "resonantcombat:bulwark_crash",
+  "ultimate": "resonantcombat:fortress_unleashed",
+  "allowed_epicfight_types": []
+}

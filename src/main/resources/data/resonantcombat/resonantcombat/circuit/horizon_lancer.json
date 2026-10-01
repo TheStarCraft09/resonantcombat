@@ -1,0 +1,15 @@
+{
+  "weapon_class": "resonantcombat:spear",
+  "weight": 60,
+  "tier": "standard",
+  "tags": [
+    "mobility",
+    "spacing"
+  ],
+  "basic_combo": "resonantcombat:reach_and_return",
+  "heavy_profile": "resonantcombat:piercing_charge",
+  "plunge_profile": "resonantcombat:spear_plunge",
+  "resonance_skill": "resonantcombat:hunters_lunge",
+  "ultimate": "resonantcombat:thousandfold_thrust",
+  "allowed_epicfight_types": []
+}

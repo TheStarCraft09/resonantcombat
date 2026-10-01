@@ -1,0 +1,22 @@
+{
+  "icon": "minecraft:iron_sword",
+  "order": 0,
+  "epicfight_categories": [
+    "sword",
+    "longsword"
+  ],
+  "starter_kit": [
+    {
+      "items": [
+        "minecraft:iron_sword"
+      ],
+      "count": 1
+    },
+    {
+      "items": [
+        "minecraft:bread"
+      ],
+      "count": 8
+    }
+  ]
+}

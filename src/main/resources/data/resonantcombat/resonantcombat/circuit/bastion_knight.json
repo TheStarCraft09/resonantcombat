@@ -1,0 +1,15 @@
+{
+  "weapon_class": "resonantcombat:sword",
+  "weight": 60,
+  "tier": "standard",
+  "tags": [
+    "defensive",
+    "counter"
+  ],
+  "basic_combo": "resonantcombat:guarded_edge",
+  "heavy_profile": "resonantcombat:shield_breaking_thrust",
+  "plunge_profile": "resonantcombat:sword_plunge",
+  "resonance_skill": "resonantcombat:iron_reversal",
+  "ultimate": "resonantcombat:last_light",
+  "allowed_epicfight_types": []
+}

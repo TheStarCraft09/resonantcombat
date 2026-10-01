@@ -1,0 +1,24 @@
+{
+  "icon": "minecraft:iron_axe",
+  "order": 1,
+  "epicfight_categories": [
+    "greatsword",
+    "axe",
+    "hammer"
+  ],
+  "starter_kit": [
+    {
+      "items": [
+        "epicfight:iron_greatsword",
+        "minecraft:iron_axe"
+      ],
+      "count": 1
+    },
+    {
+      "items": [
+        "minecraft:bread"
+      ],
+      "count": 8
+    }
+  ]
+}

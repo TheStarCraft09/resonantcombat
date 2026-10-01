@@ -1,0 +1,15 @@
+{
+  "weapon_class": "resonantcombat:saber",
+  "weight": 30,
+  "tier": "advanced",
+  "tags": [
+    "aggressive",
+    "bleed"
+  ],
+  "basic_combo": "resonantcombat:red_lotus_chain",
+  "heavy_profile": "resonantcombat:execution_dash",
+  "plunge_profile": "resonantcombat:saber_plunge",
+  "resonance_skill": "resonantcombat:red_lotus",
+  "ultimate": "resonantcombat:scarlet_tempest",
+  "allowed_epicfight_types": []
+}

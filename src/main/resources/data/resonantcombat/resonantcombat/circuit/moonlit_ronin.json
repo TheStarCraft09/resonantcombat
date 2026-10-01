@@ -1,0 +1,15 @@
+{
+  "weapon_class": "resonantcombat:saber",
+  "weight": 60,
+  "tier": "standard",
+  "tags": [
+    "counter",
+    "precision"
+  ],
+  "basic_combo": "resonantcombat:crescent_flow",
+  "heavy_profile": "resonantcombat:iai_draw_cut",
+  "plunge_profile": "resonantcombat:saber_plunge",
+  "resonance_skill": "resonantcombat:crescent_counter",
+  "ultimate": "resonantcombat:silent_moon_verdict",
+  "allowed_epicfight_types": []
+}

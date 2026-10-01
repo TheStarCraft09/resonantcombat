@@ -1,0 +1,25 @@
+{
+  "icon": "epicfight:uchigatana",
+  "order": 4,
+  "epicfight_categories": [
+    "uchigatana",
+    "tachi",
+    "dagger"
+  ],
+  "starter_kit": [
+    {
+      "items": [
+        "epicfight:uchigatana",
+        "epicfight:iron_tachi",
+        "minecraft:iron_sword"
+      ],
+      "count": 1
+    },
+    {
+      "items": [
+        "minecraft:bread"
+      ],
+      "count": 8
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "weapon_class": "resonantcombat:broadblade",
+  "weight": 60,
+  "tier": "standard",
+  "tags": [
+    "stagger"
+  ],
+  "basic_combo": "resonantcombat:crag_splitter",
+  "heavy_profile": "resonantcombat:mountainfall_smash",
+  "plunge_profile": "resonantcombat:broadblade_plunge",
+  "resonance_skill": "resonantcombat:seismic_cleave",
+  "ultimate": "resonantcombat:earthshatter_oath",
+  "allowed_epicfight_types": []
+}

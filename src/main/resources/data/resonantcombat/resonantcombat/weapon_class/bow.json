@@ -1,0 +1,28 @@
+{
+  "icon": "minecraft:bow",
+  "order": 3,
+  "epicfight_categories": [
+    "bow",
+    "crossbow"
+  ],
+  "starter_kit": [
+    {
+      "items": [
+        "minecraft:bow"
+      ],
+      "count": 1
+    },
+    {
+      "items": [
+        "minecraft:arrow"
+      ],
+      "count": 48
+    },
+    {
+      "items": [
+        "minecraft:bread"
+      ],
+      "count": 8
+    }
+  ]
+}

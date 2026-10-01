@@ -1,0 +1,14 @@
+{
+  "weapon_class": "resonantcombat:spear",
+  "weight": 30,
+  "tier": "advanced",
+  "tags": [
+    "aerial"
+  ],
+  "basic_combo": "resonantcombat:rising_fang",
+  "heavy_profile": "resonantcombat:vaulting_impale",
+  "plunge_profile": "resonantcombat:spear_plunge",
+  "resonance_skill": "resonantcombat:falcon_rise",
+  "ultimate": "resonantcombat:heavenfall_spear",
+  "allowed_epicfight_types": []
+}

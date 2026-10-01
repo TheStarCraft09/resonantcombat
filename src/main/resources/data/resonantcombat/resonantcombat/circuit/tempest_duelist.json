@@ -1,0 +1,19 @@
+{
+  "weapon_class": "resonantcombat:sword",
+  "weight": 30,
+  "tier": "advanced",
+  "tags": [
+    "mobility",
+    "aerial",
+    "duelist"
+  ],
+  "basic_combo": "resonantcombat:crosswind_sequence",
+  "heavy_profile": "resonantcombat:advancing_cyclone_cleave",
+  "plunge_profile": "resonantcombat:stormfall",
+  "resonance_skill": "resonantcombat:breaker_step",
+  "ultimate": "resonantcombat:stormbound_arsenal",
+  "allowed_epicfight_types": [
+    "sword",
+    "longsword"
+  ]
+}
