@@ -18,9 +18,13 @@ public final class ModAttachments {
                     .copyOnDeath()
                     .build());
 
-    /** Transient combat state. No serializer = not saved. */
+    /** Transient combat state (players). No serializer = not saved. */
     public static final Supplier<AttachmentType<CombatRuntime>> RUNTIME = ATTACHMENTS.register("runtime",
             () -> AttachmentType.builder(CombatRuntime::new).build());
+
+    /** Transient posture state (target entities). */
+    public static final Supplier<AttachmentType<PostureData>> POSTURE = ATTACHMENTS.register("posture",
+            () -> AttachmentType.builder(PostureData::new).build());
 
     private ModAttachments() {}
 }

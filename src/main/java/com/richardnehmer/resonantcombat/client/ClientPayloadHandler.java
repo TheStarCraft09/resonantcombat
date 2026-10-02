@@ -4,6 +4,7 @@ import com.richardnehmer.resonantcombat.client.gui.CircuitRevealScreen;
 import com.richardnehmer.resonantcombat.client.gui.ClassSelectionScreen;
 import com.richardnehmer.resonantcombat.common.network.ModPayloads;
 import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
 
 /** Client-side payload handlers. Only referenced from lambdas, so it never loads on a dedicated server. */
 public final class ClientPayloadHandler {
@@ -18,6 +19,27 @@ public final class ClientPayloadHandler {
 
     public static void onProfileSync(ModPayloads.ProfileSync payload) {
         ClientProfileCache.set(payload.profile());
+    }
+
+    public static void onActionResult(ModPayloads.ActionResult payload) {
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.level == null) return;
+        if (payload.accepted()) {
+            if (payload.action() == ModPayloads.ActionResult.ACTION_DOUBLE_JUMP) {
+                ClientActionState.plungeWindowEnd = mc.level.getGameTime() + payload.value();
+            } else if (payload.action() == ModPayloads.ActionResult.ACTION_PLUNGE) {
+                ClientActionState.plungeWindowEnd = 0L;
+            }
+        } else if (!payload.reason().isEmpty()) {
+            mc.gui.setOverlayMessage(Component.translatable("message.resonantcombat.reject." + payload.reason()), false);
+        }
+    }
+
+    public static void onPostureUpdate(ModPayloads.PostureUpdate payload) {
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.level == null) return;
+        ClientActionState.POSTURE.put(payload.entityId(), new ClientActionState.PostureView(
+                payload.posture(), payload.max(), payload.staggered(), mc.level.getGameTime()));
     }
 
     private ClientPayloadHandler() {}

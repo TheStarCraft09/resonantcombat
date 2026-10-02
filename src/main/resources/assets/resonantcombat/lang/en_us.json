@@ -58,5 +58,10 @@
   "circuit.resonantcombat.crimson_edge": "Crimson Edge",
   "circuit.resonantcombat.crimson_edge.desc": "Aggressive bleed-style fighter. Combo: Red Lotus Chain. Heavy: Execution Dash. Skill: Red Lotus. Ultimate: Scarlet Tempest.",
   "circuit.resonantcombat.falling_petal": "Falling Petal",
-  "circuit.resonantcombat.falling_petal.desc": "Evasion and aerial combat specialist. Combo: Petal Dance. Heavy: Leaping Vertical Slash. Skill: Petal Step. Ultimate: Thousand Petals."
+  "circuit.resonantcombat.falling_petal.desc": "Evasion and aerial combat specialist. Combo: Petal Dance. Heavy: Leaping Vertical Slash. Skill: Petal Step. Ultimate: Thousand Petals.",
+  "key.resonantcombat.double_jump": "Double Jump (optional; default uses Epic Fight's dodge key)",
+  "hud.resonantcombat.plunge_ready": "Plunge ready - attack!",
+  "hud.resonantcombat.posture": "Posture",
+  "message.resonantcombat.reject.no_stamina": "Not enough stamina",
+  "message.resonantcombat.reject.too_low": "Too close to the ground to plunge"
 }

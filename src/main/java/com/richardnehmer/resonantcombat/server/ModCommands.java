@@ -13,6 +13,8 @@ import com.richardnehmer.resonantcombat.common.network.ModPayloads;
 import com.richardnehmer.resonantcombat.common.registry.ModRegistries;
 import com.richardnehmer.resonantcombat.common.registry.WeaponClassResolver;
 import com.richardnehmer.resonantcombat.integration.epicfight.EpicFightBridge;
+import com.richardnehmer.resonantcombat.integration.epicfight.EpicFightProbe;
+import com.richardnehmer.resonantcombat.integration.epicfight.EpicFightStamina;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
@@ -63,8 +65,10 @@ public final class ModCommands {
                         .then(Commands.argument("player", EntityArgument.player())
                                 .then(Commands.argument("amount", FloatArgumentType.floatArg(0, 100))
                                         .executes(ctx -> setResource(ctx, false))))))
-                .then(Commands.literal("debug").then(Commands.literal("state")
-                        .then(Commands.argument("player", EntityArgument.player()).executes(ModCommands::debugState)))));
+                .then(Commands.literal("debug")
+                        .then(Commands.literal("state")
+                                .then(Commands.argument("player", EntityArgument.player()).executes(ModCommands::debugState)))
+                        .then(Commands.literal("probe").executes(ModCommands::debugProbe))));
     }
 
     private static int classGet(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
@@ -153,9 +157,22 @@ public final class ModCommands {
                 "EF battle mode: " + EpicFightBridge.isBattleMode(p),
                 "held item: " + held.getItem() + " | EF category: " + EpicFightBridge.weaponCategory(held).orElse("<unknown>"),
                 "resolved class: " + WeaponClassResolver.resolve(p.level().registryAccess(), held).map(ResourceLocation::toString).orElse("<unsupported>"),
-                "circuit active: " + WeaponClassResolver.isCircuitActive(p));
+                "circuit active: " + WeaponClassResolver.isCircuitActive(p),
+                "runtime state: " + p.getData(ModAttachments.RUNTIME).state
+                        + " | doubleJumpUsed: " + p.getData(ModAttachments.RUNTIME).doubleJumpUsed
+                        + " | EF stamina: " + EpicFightStamina.get(p));
         ctx.getSource().sendSuccess(() -> Component.literal(report), false);
         return 1;
+    }
+
+    private static int debugProbe(CommandContext<CommandSourceStack> ctx) {
+        try {
+            java.nio.file.Path file = EpicFightProbe.run();
+            ctx.getSource().sendSuccess(() -> Component.literal("Epic Fight API probe written to " + file), false);
+            return 1;
+        } catch (Exception e) {
+            return fail(ctx, "Probe failed: " + e);
+        }
     }
 
     private static int fail(CommandContext<CommandSourceStack> ctx, String message) {
