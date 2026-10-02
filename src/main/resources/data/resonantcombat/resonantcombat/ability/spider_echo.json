@@ -1,0 +1,15 @@
+{
+  "kind": "echo",
+  "type": "dash_strike",
+  "resonance_cost": 0.0,
+  "stamina_cost": 0.0,
+  "cooldown_ticks": 40,
+  "params": {
+    "dash_ticks": 6,
+    "dash_speed": 0.5,
+    "dash_vy": 0.45,
+    "damage_mult": 0.0
+  },
+  "max_charges": 2,
+  "recharge_ticks": 900
+}

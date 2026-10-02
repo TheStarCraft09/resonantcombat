@@ -1,0 +1,12 @@
+{
+  "kind": "ultimate",
+  "type": "stance",
+  "resonance_cost": 0.0,
+  "stamina_cost": 0.0,
+  "cooldown_ticks": 0,
+  "params": {
+    "duration": 160,
+    "taken_mult": 0.5,
+    "cast_ticks": 14
+  }
+}

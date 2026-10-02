@@ -1,0 +1,14 @@
+{
+  "kind": "echo",
+  "type": "stance",
+  "resonance_cost": 0.0,
+  "stamina_cost": 8.0,
+  "cooldown_ticks": 60,
+  "params": {
+    "duration": 60,
+    "invis_ticks": 60,
+    "cast_ticks": 6
+  },
+  "max_charges": 2,
+  "recharge_ticks": 900
+}

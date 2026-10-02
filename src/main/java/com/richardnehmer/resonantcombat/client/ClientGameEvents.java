@@ -2,7 +2,9 @@ package com.richardnehmer.resonantcombat.client;
 
 import com.richardnehmer.resonantcombat.ResonantCombat;
 import com.richardnehmer.resonantcombat.client.gui.CircuitRevealScreen;
+import com.richardnehmer.resonantcombat.common.network.ModPayloads;
 import net.minecraft.client.Minecraft;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -20,7 +22,9 @@ public final class ClientGameEvents {
         while (ClientKeyMappings.INSPECT.consumeClick()) {
             ClientProfileCache.get().assignedCircuit().ifPresent(id -> mc.setScreen(new CircuitRevealScreen(id)));
         }
-        // TODO(Phase 5): consume SKILL / ULTIMATE / ECHO clicks and send intent payloads.
+        while (ClientKeyMappings.SKILL.consumeClick()) PacketDistributor.sendToServer(new ModPayloads.SkillIntent());
+        while (ClientKeyMappings.ULTIMATE.consumeClick()) PacketDistributor.sendToServer(new ModPayloads.UltimateIntent());
+        while (ClientKeyMappings.ECHO.consumeClick()) PacketDistributor.sendToServer(new ModPayloads.EchoIntent());
     }
 
     @SubscribeEvent

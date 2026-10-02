@@ -1,0 +1,17 @@
+{
+  "kind": "ultimate",
+  "type": "area_burst",
+  "resonance_cost": 0.0,
+  "stamina_cost": 0.0,
+  "cooldown_ticks": 0,
+  "params": {
+    "delay": 10,
+    "repeats": 6,
+    "interval": 3,
+    "radius": 2.2,
+    "forward": 3.2,
+    "damage_mult": 0.65,
+    "posture_mult": 1.2,
+    "knockback": 0.2
+  }
+}

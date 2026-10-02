@@ -5,7 +5,10 @@ import com.richardnehmer.resonantcombat.common.attachment.CombatRuntime;
 import com.richardnehmer.resonantcombat.common.attachment.ModAttachments;
 import com.richardnehmer.resonantcombat.common.network.ModPayloads;
 import com.richardnehmer.resonantcombat.common.registry.WeaponClassResolver;
+import com.richardnehmer.resonantcombat.integration.epicfight.AnimationHook;
 import com.richardnehmer.resonantcombat.integration.epicfight.EpicFightStamina;
+import com.richardnehmer.resonantcombat.common.data.WeaponClassDefinition;
+import com.richardnehmer.resonantcombat.common.attachment.PlayerProfile;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -95,7 +98,9 @@ public final class HeavyAttackController {
     }
 
     private static void execute(ServerPlayer player, CombatRuntime rt, int tier) {
-        if (!EpicFightStamina.tryConsume(player, CombatTuning.HEAVY_STAMINA[tier])) {
+        long nowTick = player.level().getGameTime();
+        boolean free = rt.stanceHeavyFree && nowTick <= rt.stanceEnd;
+        if (!free && !EpicFightStamina.tryConsume(player, CombatTuning.HEAVY_STAMINA[tier])) {
             ActionValidator.reject(player, ModPayloads.ActionResult.ACTION_HEAVY, "no_stamina");
             return;
         }
@@ -105,10 +110,26 @@ public final class HeavyAttackController {
         rt.heavyImpactTick = now + CombatTuning.HEAVY_WINDUP_TICKS[tier];
         rt.recoveryEndTick = rt.heavyImpactTick + CombatTuning.HEAVY_RECOVERY_TICKS[tier];
 
-        player.swing(InteractionHand.MAIN_HAND, true);
-        // TODO(HeavyAnimationHook): play the Circuit's heavy animation through Epic Fight here.
+        // Animation path: Epic Fight's hit phases deal the damage, we only scale damage/posture. No animation -> own sweep.
+        if (playHeavyAnimation(player, tier)) {
+            rt.heavyImpactTick = -1;
+            rt.hitDamageMult = CombatTuning.HEAVY_DAMAGE[tier];
+            rt.hitPostureMult = CombatTuning.HEAVY_POSTURE[tier];
+            rt.hitMultEnd = rt.recoveryEndTick;
+        } else {
+            player.swing(InteractionHand.MAIN_HAND, true);
+        }
         player.level().playSound(null, player.getX(), player.getY(), player.getZ(),
                 SoundEvents.PLAYER_ATTACK_STRONG, SoundSource.PLAYERS, 1.0F, 0.8F - 0.1F * tier);
+    }
+
+    private static boolean playHeavyAnimation(ServerPlayer player, int tier) {
+        PlayerProfile profile = player.getData(ModAttachments.PROFILE);
+        if (profile.selectedClass().isEmpty()) return false;
+        WeaponClassDefinition def = com.richardnehmer.resonantcombat.common.registry.ModRegistries
+                .weaponClasses(player.level().registryAccess()).get(profile.selectedClass().get());
+        if (def == null || def.heavyAnimations().size() <= tier) return false;
+        return AnimationHook.play(player, def.heavyAnimations().get(tier), 0.1F);
     }
 
     private static void impact(ServerPlayer player, CombatRuntime rt) {

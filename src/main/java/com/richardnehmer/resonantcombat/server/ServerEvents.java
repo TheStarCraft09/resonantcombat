@@ -2,6 +2,7 @@ package com.richardnehmer.resonantcombat.server;
 
 import com.richardnehmer.resonantcombat.ResonantCombat;
 import com.richardnehmer.resonantcombat.common.combat.CombatTicker;
+import com.richardnehmer.resonantcombat.common.combat.DamageModifiers;
 import com.richardnehmer.resonantcombat.common.combat.HeavyAttackController;
 import com.richardnehmer.resonantcombat.common.combat.PlungeController;
 import com.richardnehmer.resonantcombat.common.combat.PostureController;
@@ -54,6 +55,7 @@ public final class ServerEvents {
 
     @SubscribeEvent
     public static void onIncomingDamage(LivingIncomingDamageEvent event) {
+        DamageModifiers.onIncoming(event);
         PostureController.onIncomingDamage(event);
     }
 

@@ -3,6 +3,7 @@ package com.richardnehmer.resonantcombat.common.combat;
 import com.richardnehmer.resonantcombat.common.attachment.ModAttachments;
 import com.richardnehmer.resonantcombat.common.attachment.PostureData;
 import com.richardnehmer.resonantcombat.common.network.ModPayloads;
+import com.richardnehmer.resonantcombat.integration.epicfight.EpicFightStun;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -46,7 +47,10 @@ public final class PostureController {
             data.posture = 0.0F;
             data.staggerEndTick = now + CombatTuning.STAGGER_TICKS;
             data.wasStaggered = true;
-            target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, CombatTuning.STAGGER_TICKS, 6, false, false));
+            if (!EpicFightStun.applyNeutralize(target, CombatTuning.STAGGER_TICKS / 20.0F)) {
+                // target has no Epic Fight patch: vanilla fallback
+                target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, CombatTuning.STAGGER_TICKS, 6, false, false));
+            }
             level.playSound(null, target.getX(), target.getY(), target.getZ(), SoundEvents.SHIELD_BREAK, SoundSource.HOSTILE, 1.0F, 0.8F);
             level.sendParticles(ParticleTypes.CRIT, target.getX(), target.getY(0.6), target.getZ(), 20, 0.4, 0.5, 0.4, 0.3);
         }

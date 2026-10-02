@@ -20,5 +20,10 @@
       ],
       "count": 8
     }
+  ],
+  "heavy_animations": [
+    "SPEAR_TWOHAND_AUTO1",
+    "SPEAR_TWOHAND_AUTO2",
+    "SPEAR_DASH"
   ]
 }

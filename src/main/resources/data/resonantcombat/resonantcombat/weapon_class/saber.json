@@ -21,5 +21,10 @@
       ],
       "count": 8
     }
+  ],
+  "heavy_animations": [
+    "UCHIGATANA_AUTO1",
+    "UCHIGATANA_AUTO3",
+    "UCHIGATANA_DASH"
   ]
 }

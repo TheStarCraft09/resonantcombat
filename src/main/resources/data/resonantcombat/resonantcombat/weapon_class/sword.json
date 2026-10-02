@@ -18,5 +18,10 @@
       ],
       "count": 8
     }
+  ],
+  "heavy_animations": [
+    "SWORD_AUTO2",
+    "SWORD_AUTO3",
+    "SWORD_DASH"
   ]
 }

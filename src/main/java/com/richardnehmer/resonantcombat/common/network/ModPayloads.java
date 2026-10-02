@@ -71,6 +71,7 @@ public final class ModPayloads {
         public static final int ACTION_DOUBLE_JUMP = 0;
         public static final int ACTION_PLUNGE = 1;
         public static final int ACTION_HEAVY = 2;
+        public static final int ACTION_ABILITY = 3;
 
         public static final Type<ActionResult> TYPE = new Type<>(ResonantCombat.id("action_result"));
         public static final StreamCodec<ByteBuf, ActionResult> CODEC = StreamCodec.composite(
@@ -90,6 +91,34 @@ public final class ModPayloads {
                 ByteBufCodecs.FLOAT, PostureUpdate::max,
                 ByteBufCodecs.BOOL, PostureUpdate::staggered,
                 PostureUpdate::new);
+        @Override public Type<? extends CustomPacketPayload> type() { return TYPE; }
+    }
+
+    public record SkillIntent() implements CustomPacketPayload {
+        public static final Type<SkillIntent> TYPE = new Type<>(ResonantCombat.id("skill_intent"));
+        public static final StreamCodec<ByteBuf, SkillIntent> CODEC = StreamCodec.unit(new SkillIntent());
+        @Override public Type<? extends CustomPacketPayload> type() { return TYPE; }
+    }
+
+    public record UltimateIntent() implements CustomPacketPayload {
+        public static final Type<UltimateIntent> TYPE = new Type<>(ResonantCombat.id("ultimate_intent"));
+        public static final StreamCodec<ByteBuf, UltimateIntent> CODEC = StreamCodec.unit(new UltimateIntent());
+        @Override public Type<? extends CustomPacketPayload> type() { return TYPE; }
+    }
+
+    public record EchoIntent() implements CustomPacketPayload {
+        public static final Type<EchoIntent> TYPE = new Type<>(ResonantCombat.id("echo_intent"));
+        public static final StreamCodec<ByteBuf, EchoIntent> CODEC = StreamCodec.unit(new EchoIntent());
+        @Override public Type<? extends CustomPacketPayload> type() { return TYPE; }
+    }
+
+    /** Server -> client: a cooldown just started. slot: 0 = skill, 2 = echo. */
+    public record AbilityCooldown(int slot, int ticks) implements CustomPacketPayload {
+        public static final Type<AbilityCooldown> TYPE = new Type<>(ResonantCombat.id("ability_cooldown"));
+        public static final StreamCodec<ByteBuf, AbilityCooldown> CODEC = StreamCodec.composite(
+                ByteBufCodecs.VAR_INT, AbilityCooldown::slot,
+                ByteBufCodecs.VAR_INT, AbilityCooldown::ticks,
+                AbilityCooldown::new);
         @Override public Type<? extends CustomPacketPayload> type() { return TYPE; }
     }
 

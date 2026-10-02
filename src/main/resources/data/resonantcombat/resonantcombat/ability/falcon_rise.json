@@ -1,0 +1,14 @@
+{
+  "kind": "skill",
+  "type": "dash_strike",
+  "resonance_cost": 30.0,
+  "stamina_cost": 0.0,
+  "cooldown_ticks": 180,
+  "params": {
+    "dash_ticks": 7,
+    "dash_speed": 0.35,
+    "dash_vy": 0.55,
+    "damage_mult": 1.2,
+    "posture_mult": 1.5
+  }
+}

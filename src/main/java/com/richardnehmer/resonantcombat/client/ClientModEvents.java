@@ -1,6 +1,7 @@
 package com.richardnehmer.resonantcombat.client;
 
 import com.richardnehmer.resonantcombat.ResonantCombat;
+import com.richardnehmer.resonantcombat.client.hud.AbilityHudOverlay;
 import com.richardnehmer.resonantcombat.client.hud.CombatHudOverlay;
 import com.richardnehmer.resonantcombat.client.hud.ResonanceHudOverlay;
 import net.neoforged.api.distmarker.Dist;
@@ -25,6 +26,7 @@ public final class ClientModEvents {
     public static void onGuiLayers(RegisterGuiLayersEvent event) {
         event.registerAboveAll(ResonantCombat.id("resonance_hud"), ResonanceHudOverlay::render);
         event.registerAboveAll(ResonantCombat.id("combat_hud"), CombatHudOverlay::render);
+        event.registerAboveAll(ResonantCombat.id("ability_hud"), AbilityHudOverlay::render);
     }
 
     private ClientModEvents() {}

@@ -1,0 +1,12 @@
+{
+  "kind": "skill",
+  "type": "counter",
+  "resonance_cost": 35.0,
+  "stamina_cost": 0.0,
+  "cooldown_ticks": 200,
+  "params": {
+    "window": 22,
+    "damage_mult": 2.0,
+    "posture_mult": 3.5
+  }
+}

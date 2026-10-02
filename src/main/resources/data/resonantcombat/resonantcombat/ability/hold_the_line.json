@@ -1,0 +1,12 @@
+{
+  "kind": "skill",
+  "type": "stance",
+  "resonance_cost": 40.0,
+  "stamina_cost": 0.0,
+  "cooldown_ticks": 300,
+  "params": {
+    "duration": 120,
+    "taken_mult": 0.6,
+    "cast_ticks": 10
+  }
+}

@@ -20,5 +20,10 @@
       ],
       "count": 8
     }
+  ],
+  "heavy_animations": [
+    "GREATSWORD_AUTO1",
+    "GREATSWORD_AUTO2",
+    "GREATSWORD_DASH"
   ]
 }

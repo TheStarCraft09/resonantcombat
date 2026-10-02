@@ -7,6 +7,8 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import com.richardnehmer.resonantcombat.common.attachment.ModAttachments;
 import com.richardnehmer.resonantcombat.common.attachment.PlayerProfile;
+import com.richardnehmer.resonantcombat.common.data.AbilityDefinition;
+import com.richardnehmer.resonantcombat.common.data.AbilityKind;
 import com.richardnehmer.resonantcombat.common.data.CombatCircuitDefinition;
 import com.richardnehmer.resonantcombat.common.network.ModNetwork;
 import com.richardnehmer.resonantcombat.common.network.ModPayloads;
@@ -33,6 +35,9 @@ import java.util.Set;
 public final class ModCommands {
     private static final SuggestionProvider<CommandSourceStack> CLASSES = (ctx, builder) -> SharedSuggestionProvider.suggestResource(
             ModRegistries.weaponClasses(ctx.getSource().registryAccess()).keySet(), builder);
+    private static final SuggestionProvider<CommandSourceStack> ECHOES = (ctx, builder) -> SharedSuggestionProvider.suggestResource(
+            ModRegistries.abilities(ctx.getSource().registryAccess()).entrySet().stream()
+                    .filter(e -> e.getValue().kind() == AbilityKind.ECHO).map(e -> e.getKey().location()).toList(), builder);
     private static final SuggestionProvider<CommandSourceStack> CIRCUITS = (ctx, builder) -> SharedSuggestionProvider.suggestResource(
             ModRegistries.circuits(ctx.getSource().registryAccess()).keySet(), builder);
 
@@ -65,10 +70,25 @@ public final class ModCommands {
                         .then(Commands.argument("player", EntityArgument.player())
                                 .then(Commands.argument("amount", FloatArgumentType.floatArg(0, 100))
                                         .executes(ctx -> setResource(ctx, false))))))
+                .then(Commands.literal("echo").then(Commands.literal("give")
+                        .then(Commands.argument("player", EntityArgument.player())
+                                .then(Commands.argument("echo", ResourceLocationArgument.id()).suggests(ECHOES)
+                                        .executes(ModCommands::echoGive)))))
                 .then(Commands.literal("debug")
                         .then(Commands.literal("state")
                                 .then(Commands.argument("player", EntityArgument.player()).executes(ModCommands::debugState)))
                         .then(Commands.literal("probe").executes(ModCommands::debugProbe))));
+    }
+
+    private static int echoGive(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+        ServerPlayer p = EntityArgument.getPlayer(ctx, "player");
+        ResourceLocation id = ResourceLocationArgument.getId(ctx, "echo");
+        AbilityDefinition def = ModRegistries.abilities(p.level().registryAccess()).get(id);
+        if (def == null || def.kind() != AbilityKind.ECHO) return fail(ctx, id + " is not an Echo");
+        p.getData(ModAttachments.PROFILE).equipEcho(id, def.maxCharges());
+        ModNetwork.syncProfile(p);
+        ctx.getSource().sendSuccess(() -> Component.literal("Equipped " + id + " (" + def.maxCharges() + " charges)"), true);
+        return 1;
     }
 
     private static int classGet(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {

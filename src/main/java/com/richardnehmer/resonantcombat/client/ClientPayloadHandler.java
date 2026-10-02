@@ -35,6 +35,13 @@ public final class ClientPayloadHandler {
         }
     }
 
+    public static void onAbilityCooldown(ModPayloads.AbilityCooldown payload) {
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.level == null || payload.slot() < 0 || payload.slot() >= ClientActionState.cooldownEnd.length) return;
+        ClientActionState.cooldownEnd[payload.slot()] = mc.level.getGameTime() + payload.ticks();
+        ClientActionState.cooldownLength[payload.slot()] = payload.ticks();
+    }
+
     public static void onPostureUpdate(ModPayloads.PostureUpdate payload) {
         Minecraft mc = Minecraft.getInstance();
         if (mc.level == null) return;

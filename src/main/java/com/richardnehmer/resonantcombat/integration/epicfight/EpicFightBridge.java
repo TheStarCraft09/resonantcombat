@@ -7,54 +7,35 @@ import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.entitypatch.player.ServerPlayerPatch;
 import yesman.epicfight.world.capabilities.item.CapabilityItem;
 
-import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.Locale;
 import java.util.Optional;
 
 /**
- * THE ONLY CLASS THAT TOUCHES EPIC FIGHT TYPES.
- * Mode lookup is reflective on purpose until the real method name is confirmed (see /resonantcombat debug state
- * and the log). Once confirmed, replace it with a direct call.
+ * THE ONLY CLASS THAT TOUCHES EPIC FIGHT TYPES (all other code goes through this).
+ * Epic Fight 21.17.x reworked weapon capabilities (builder inheritance, WeaponCategory inheritance, DeferredRegister),
+ * so every call here is wrapped: if a signature changes, you get one log line and "unknown", not a crash.
+ *
+ * PHASE 0 CHECKLIST - verify against the pinned EF version (run /resonantcombat debug state):
+ *  1. EpicFightCapabilities.getEntityPatch(player, ServerPlayerPatch.class) returns non-null
+ *  2. ServerPlayerPatch#isBattleMode() exists
+ *  3. EpicFightCapabilities.getItemStackCapability(stack).getWeaponCategory() exists and its toString()
+ *     yields the lower-case category name (sword, longsword, greatsword, tachi, ...). With WeaponCategory
+ *     inheritance this may need to change to an explicit isWeaponCategory(...) style check.
  */
 public final class EpicFightBridge {
-    private static final String[] MODE_METHOD_CANDIDATES = {"isEpicFightMode", "isBattleMode"};
-
-    private static Method modeMethod;
-    private static boolean modeLookedUp;
-    private static boolean warnedCategory;
+    private static boolean warnedBattle, warnedCategory;
 
     public static boolean isBattleMode(ServerPlayer player) {
         try {
             ServerPlayerPatch patch = EpicFightCapabilities.getEntityPatch(player, ServerPlayerPatch.class);
-            if (patch == null) return false;
-            Method method = resolveModeMethod(patch.getClass());
-            return method != null && (Boolean) method.invoke(patch);
-        } catch (ReflectiveOperationException | LinkageError e) {
-            ResonantCombat.LOGGER.error("Epic Fight mode check failed", e);
+            return patch != null && patch.isBattleMode();
+        } catch (LinkageError e) {
+            if (!warnedBattle) {
+                warnedBattle = true;
+                ResonantCombat.LOGGER.error("Epic Fight API mismatch while reading battle mode (adjust EpicFightBridge)", e);
+            }
             return false;
         }
-    }
-
-    private static Method resolveModeMethod(Class<?> patchClass) {
-        if (modeLookedUp) return modeMethod;
-        modeLookedUp = true;
-        for (String name : MODE_METHOD_CANDIDATES) {
-            try {
-                Method m = patchClass.getMethod(name);
-                if (m.getReturnType() == boolean.class) {
-                    modeMethod = m;
-                    ResonantCombat.LOGGER.info("Epic Fight mode method resolved: {}#{}", patchClass.getName(), name);
-                    return modeMethod;
-                }
-            } catch (NoSuchMethodException ignored) {}
-        }
-        ResonantCombat.LOGGER.error("No Epic Fight mode method found on {}. Candidates: {}", patchClass.getName(),
-                Arrays.stream(patchClass.getMethods())
-                        .filter(m -> m.getName().toLowerCase(Locale.ROOT).contains("mode"))
-                        .map(m -> m.getReturnType().getSimpleName() + " " + m.getName() + "(" + m.getParameterCount() + " args)")
-                        .distinct().sorted().toList());
-        return null;
     }
 
     /** Lower-case Epic Fight weapon category of the stack, if Epic Fight has a capability for it. */
@@ -68,7 +49,7 @@ public final class EpicFightBridge {
         } catch (LinkageError e) {
             if (!warnedCategory) {
                 warnedCategory = true;
-                ResonantCombat.LOGGER.error("Epic Fight API mismatch while reading weapon category", e);
+                ResonantCombat.LOGGER.error("Epic Fight API mismatch while reading weapon category (adjust EpicFightBridge)", e);
             }
             return Optional.empty();
         }

@@ -32,6 +32,24 @@ public final class EpicFightProbe {
             "combo", "impact", "stun", "hold", "guard", "dodge", "motion", "damage");
     private static final List<String> FIELD_CLASSES = List.of(PKG + "gameasset.Animations", PKG + "skill.SkillSlots",
             PKG + "skill.SkillCategories", PKG + "world.capabilities.item.CapabilityItem$WeaponCategories");
+    /** v2: full public method lists (animation registry) and public constructors (to write custom animation registration). */
+    private static final List<String> FULL_METHOD_CLASSES = List.of(
+            PKG + "api.animation.AnimationManager",
+            PKG + "api.animation.AnimationManager$AnimationRegistryEvent",
+            PKG + "api.animation.AnimationManager$AnimationBuilder",
+            PKG + "api.animation.AnimationManager$AnimationAccessor");
+    private static final List<String> CONSTRUCTOR_CLASSES = List.of(
+            PKG + "api.animation.types.StaticAnimation",
+            PKG + "api.animation.types.ActionAnimation",
+            PKG + "api.animation.types.AttackAnimation",
+            PKG + "api.animation.types.AttackAnimation$Phase",
+            PKG + "api.animation.types.ComboAttackAnimation",
+            PKG + "api.animation.types.AirSlashAnimation",
+            PKG + "api.animation.types.DashAttackAnimation",
+            PKG + "api.animation.types.MovementAnimation",
+            PKG + "api.animation.types.InvincibleAnimation",
+            PKG + "api.animation.types.LongHitAnimation");
+    private static final List<String> ENUM_CLASSES = List.of(PKG + "world.damagesource.StunType");
     private static final List<String> SCAN_PREFIXES = List.of("yesman/epicfight/api/neoevent/", "yesman/epicfight/skill/",
             "yesman/epicfight/world/capabilities/item/", "yesman/epicfight/api/animation/types/");
 
@@ -46,6 +64,32 @@ public final class EpicFightProbe {
                         .filter(m -> METHOD_KEYWORDS.stream().anyMatch(k -> m.getName().toLowerCase(Locale.ROOT).contains(k)))
                         .map(EpicFightProbe::describe).collect(Collectors.toCollection(TreeSet::new))
                         .forEach(line -> out.append(line).append("\n"));
+            } catch (Throwable t) { out.append("  (unavailable: ").append(t).append(")\n"); }
+        }
+
+        for (String name : FULL_METHOD_CLASSES) {
+            out.append("\n## [v2] all public methods of ").append(name).append("\n");
+            try {
+                Arrays.stream(Class.forName(name).getMethods()).filter(m -> m.getDeclaringClass() != Object.class)
+                        .map(EpicFightProbe::describe).collect(Collectors.toCollection(TreeSet::new))
+                        .forEach(line -> out.append(line).append("\n"));
+            } catch (Throwable t) { out.append("  (unavailable: ").append(t).append(")\n"); }
+        }
+
+        for (String name : CONSTRUCTOR_CLASSES) {
+            out.append("\n## [v2] public constructors of ").append(name).append("\n");
+            try {
+                for (var c : Class.forName(name).getConstructors()) {
+                    out.append("  (").append(Arrays.stream(c.getGenericParameterTypes()).map(java.lang.reflect.Type::getTypeName)
+                            .collect(Collectors.joining(", "))).append(")\n");
+                }
+            } catch (Throwable t) { out.append("  (unavailable: ").append(t).append(")\n"); }
+        }
+
+        for (String name : ENUM_CLASSES) {
+            out.append("\n## [v2] enum constants of ").append(name).append("\n");
+            try {
+                out.append(Arrays.stream(Class.forName(name).getEnumConstants()).map(Object::toString).collect(Collectors.joining(", "))).append("\n");
             } catch (Throwable t) { out.append("  (unavailable: ").append(t).append(")\n"); }
         }
 

@@ -1,0 +1,12 @@
+{
+  "kind": "skill",
+  "type": "mark",
+  "resonance_cost": 30.0,
+  "stamina_cost": 0.0,
+  "cooldown_ticks": 240,
+  "params": {
+    "range": 30.0,
+    "duration": 300,
+    "bonus": 1.3
+  }
+}

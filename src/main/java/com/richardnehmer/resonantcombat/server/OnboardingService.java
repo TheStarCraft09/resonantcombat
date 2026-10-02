@@ -17,6 +17,7 @@ import java.util.Set;
 
 /** First-join flow (design doc 2.1). Everything authoritative happens here. */
 public final class OnboardingService {
+    private static final ResourceLocation DEFAULT_ECHO = ResonantCombat.id("ravager_echo");
 
     public static void onJoin(ServerPlayer player) {
         ModNetwork.syncProfile(player);
@@ -55,6 +56,9 @@ public final class OnboardingService {
             profile.setStarterKitGranted(true);
         }
         profile.setOnboardingComplete(true);
+        if (ModRegistries.abilities(player.level().registryAccess()).containsKey(DEFAULT_ECHO)) {
+            profile.equipEcho(DEFAULT_ECHO, 1); // vertical slice: start with the Ravager Echo (acquisition system comes later)
+        }
 
         ModNetwork.syncProfile(player);
         PacketDistributor.sendToPlayer(player, new ModPayloads.CircuitAssigned(circuit.get()));

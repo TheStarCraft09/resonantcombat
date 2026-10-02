@@ -1,0 +1,15 @@
+{
+  "kind": "ultimate",
+  "type": "dash_strike",
+  "resonance_cost": 0.0,
+  "stamina_cost": 0.0,
+  "cooldown_ticks": 0,
+  "params": {
+    "dash_ticks": 12,
+    "dash_speed": 1.0,
+    "damage_mult": 2.4,
+    "posture_mult": 3.0,
+    "range": 2.0,
+    "knockback": 0.3
+  }
+}

@@ -30,7 +30,8 @@ public class PlayerProfile {
             Codec.LONG.optionalFieldOf("last_respec_tick", 0L).forGetter(p -> p.lastRespecTick),
             Codec.FLOAT.optionalFieldOf("resonance", 0.0F).forGetter(p -> p.resonance),
             Codec.FLOAT.optionalFieldOf("liberation_energy", 0.0F).forGetter(p -> p.liberationEnergy),
-            Codec.unboundedMap(ResourceLocation.CODEC, Codec.INT).optionalFieldOf("echo_charges", Map.of()).forGetter(p -> p.echoCharges)
+            Codec.unboundedMap(ResourceLocation.CODEC, Codec.INT).optionalFieldOf("echo_charges", Map.of()).forGetter(p -> p.echoCharges),
+            ResourceLocation.CODEC.optionalFieldOf("equipped_echo").forGetter(p -> Optional.ofNullable(p.equippedEcho))
     ).apply(i, PlayerProfile::new));
 
     public static final StreamCodec<ByteBuf, PlayerProfile> STREAM_CODEC = ByteBufCodecs.fromCodec(CODEC);
@@ -46,13 +47,14 @@ public class PlayerProfile {
     private float resonance;
     private float liberationEnergy;
     private final Map<ResourceLocation, Integer> echoCharges = new HashMap<>();
+    private ResourceLocation equippedEcho;
 
     public PlayerProfile() {}
 
     private PlayerProfile(Optional<ResourceLocation> selectedClass, Optional<ResourceLocation> assignedCircuit,
                           long seed, long assignedAt, boolean onboardingComplete, boolean starterKitGranted,
                           int respecCount, long lastRespecTick, float resonance, float liberation,
-                          Map<ResourceLocation, Integer> echoCharges) {
+                          Map<ResourceLocation, Integer> echoCharges, Optional<ResourceLocation> equippedEcho) {
         this.selectedClass = selectedClass.orElse(null);
         this.assignedCircuit = assignedCircuit.orElse(null);
         this.circuitRollSeed = seed;
@@ -64,6 +66,7 @@ public class PlayerProfile {
         this.resonance = resonance;
         this.liberationEnergy = liberation;
         this.echoCharges.putAll(echoCharges);
+        this.equippedEcho = equippedEcho.orElse(null);
     }
 
     public Optional<ResourceLocation> selectedClass() { return Optional.ofNullable(selectedClass); }
@@ -99,6 +102,10 @@ public class PlayerProfile {
     public float liberationEnergy() { return liberationEnergy; }
     public void setLiberationEnergy(float v) { this.liberationEnergy = clamp(v); }
     public Map<ResourceLocation, Integer> echoCharges() { return echoCharges; }
+    public Optional<ResourceLocation> equippedEcho() { return Optional.ofNullable(equippedEcho); }
+    public void equipEcho(ResourceLocation id, int charges) { this.equippedEcho = id; this.echoCharges.put(id, charges); }
+    public int echoCharge(ResourceLocation id) { return echoCharges.getOrDefault(id, 0); }
+    public void setEchoCharge(ResourceLocation id, int charges) { echoCharges.put(id, Math.max(0, charges)); }
 
     private static float clamp(float v) { return Math.max(0.0F, Math.min(MAX_RESOURCE, v)); }
 }

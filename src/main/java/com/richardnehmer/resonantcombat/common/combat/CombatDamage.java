@@ -18,7 +18,8 @@ public final class CombatDamage {
         rt.damageGuard = true; // our hit must not trigger the normal on-hit resource/posture gain
         try {
             target.invulnerableTime = 0; // vanilla i-frames would swallow back-to-back strikes
-            boolean hit = target.hurt(attacker.damageSources().playerAttack(attacker), damage);
+            float scaled = damage * DamageModifiers.attackerMultiplier(attacker, target, false);
+            boolean hit = target.hurt(attacker.damageSources().playerAttack(attacker), scaled);
             if (hit) {
                 PostureController.damage(target, posture);
                 if (push != null && pushStrength > 0.0) {

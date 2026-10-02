@@ -34,9 +34,12 @@ public final class CombatTicker {
             rt.airTicks++;
         }
 
+        if ((now & 7L) == 0L) AbilityController.tickEchoRecharge(player, rt, now);
+
         switch (rt.state) {
             case CHARGING_HEAVY, HEAVY_RECOVERY -> HeavyAttackController.tick(player, rt, now);
             case PLUNGE_ACTIVE -> PlungeController.tick(player, rt);
+            case SKILL_ACTIVE, ULTIMATE_ACTIVE, ECHO_ACTIVE -> AbilityController.tick(player, rt, now);
             default -> { }
         }
     }

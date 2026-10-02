@@ -23,7 +23,11 @@ public final class ResourceController {
 
         // TODO(Phase 3+): once-per-target-per-swing gating; multi-hit attacks currently grant per damage event.
         add(player, HIT_RESONANCE, HIT_LIBERATION);
-        PostureController.damage(event.getEntity(), event.getNewDamage() * CombatTuning.POSTURE_PER_DAMAGE);
+        float postureFactor = 1.0F;
+        if (player.level().getGameTime() <= rt.hitMultEnd && rt.hitDamageMult > 0.0F) {
+            postureFactor = rt.hitPostureMult / rt.hitDamageMult; // animation-driven heavy/ability hit
+        }
+        PostureController.damage(event.getEntity(), event.getNewDamage() * CombatTuning.POSTURE_PER_DAMAGE * postureFactor);
     }
 
     public static void add(ServerPlayer player, float resonance, float liberation) {

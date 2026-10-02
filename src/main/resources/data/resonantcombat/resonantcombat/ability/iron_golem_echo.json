@@ -1,0 +1,17 @@
+{
+  "kind": "echo",
+  "type": "area_burst",
+  "resonance_cost": 0.0,
+  "stamina_cost": 0.0,
+  "cooldown_ticks": 80,
+  "params": {
+    "delay": 4,
+    "radius": 3.5,
+    "forward": 1.5,
+    "damage_mult": 0.4,
+    "posture_mult": 3.0,
+    "knockback": 1.2
+  },
+  "max_charges": 1,
+  "recharge_ticks": 1500
+}

@@ -1,0 +1,15 @@
+{
+  "kind": "skill",
+  "type": "area_burst",
+  "resonance_cost": 45.0,
+  "stamina_cost": 0.0,
+  "cooldown_ticks": 280,
+  "params": {
+    "delay": 8,
+    "radius": 3.0,
+    "forward": 3.0,
+    "damage_mult": 1.6,
+    "posture_mult": 3.5,
+    "knockback": 0.8
+  }
+}

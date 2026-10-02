@@ -1,6 +1,7 @@
 package com.richardnehmer.resonantcombat.common.registry;
 
 import com.richardnehmer.resonantcombat.ResonantCombat;
+import com.richardnehmer.resonantcombat.common.data.AbilityDefinition;
 import com.richardnehmer.resonantcombat.common.data.CombatCircuitDefinition;
 import com.richardnehmer.resonantcombat.common.data.WeaponClassDefinition;
 import net.minecraft.core.Registry;
@@ -16,10 +17,14 @@ public final class ModRegistries {
     public static final ResourceKey<Registry<CombatCircuitDefinition>> CIRCUIT =
             ResourceKey.createRegistryKey(ResonantCombat.id("circuit"));
 
+    public static final ResourceKey<Registry<AbilityDefinition>> ABILITY =
+            ResourceKey.createRegistryKey(ResonantCombat.id("ability"));
+
     public static void onNewDatapackRegistries(DataPackRegistryEvent.NewRegistry event) {
         // Same codec for disk and network: clients need names/starter previews/circuit info for the GUI.
         event.dataPackRegistry(WEAPON_CLASS, WeaponClassDefinition.CODEC, WeaponClassDefinition.CODEC);
         event.dataPackRegistry(CIRCUIT, CombatCircuitDefinition.CODEC, CombatCircuitDefinition.CODEC);
+        event.dataPackRegistry(ABILITY, AbilityDefinition.CODEC, AbilityDefinition.CODEC);
     }
 
     public static Registry<WeaponClassDefinition> weaponClasses(RegistryAccess access) {
@@ -30,7 +35,12 @@ public final class ModRegistries {
         return access.registryOrThrow(CIRCUIT);
     }
 
+    public static Registry<AbilityDefinition> abilities(RegistryAccess access) {
+        return access.registryOrThrow(ABILITY);
+    }
+
     // ---- lang-key helpers ----
+    public static Component abilityName(ResourceLocation id) { return Component.translatable(id.toLanguageKey("ability")); }
     public static Component className(ResourceLocation id) { return Component.translatable(id.toLanguageKey("weapon_class")); }
     public static Component classDesc(ResourceLocation id) { return Component.translatable(id.toLanguageKey("weapon_class") + ".desc"); }
     public static Component circuitName(ResourceLocation id) { return Component.translatable(id.toLanguageKey("circuit")); }
