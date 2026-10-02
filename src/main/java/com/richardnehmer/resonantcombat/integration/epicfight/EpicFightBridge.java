@@ -28,7 +28,7 @@ public final class EpicFightBridge {
     public static boolean isBattleMode(ServerPlayer player) {
         try {
             ServerPlayerPatch patch = EpicFightCapabilities.getEntityPatch(player, ServerPlayerPatch.class);
-            return patch != null && patch.isBattleMode();
+            return patch != null && patch.isEpicFightMode();
         } catch (LinkageError e) {
             if (!warnedBattle) {
                 warnedBattle = true;
