@@ -1,0 +1,32 @@
+{
+  "values": {
+    "minecraft:ravager": {
+      "echo": "resonantcombat:ravager_echo",
+      "chance": 0.25
+    },
+    "minecraft:phantom": {
+      "echo": "resonantcombat:phantom_echo",
+      "chance": 0.06
+    },
+    "minecraft:iron_golem": {
+      "echo": "resonantcombat:iron_golem_echo",
+      "chance": 0.1
+    },
+    "minecraft:blaze": {
+      "echo": "resonantcombat:blaze_echo",
+      "chance": 0.08
+    },
+    "minecraft:enderman": {
+      "echo": "resonantcombat:enderman_echo",
+      "chance": 0.04
+    },
+    "minecraft:spider": {
+      "echo": "resonantcombat:spider_echo",
+      "chance": 0.03
+    },
+    "minecraft:vex": {
+      "echo": "resonantcombat:vex_echo",
+      "chance": 0.1
+    }
+  }
+}
