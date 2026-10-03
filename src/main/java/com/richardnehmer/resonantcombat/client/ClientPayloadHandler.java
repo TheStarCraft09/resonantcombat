@@ -9,8 +9,8 @@ import net.minecraft.network.chat.Component;
 /** Client-side payload handlers. Only referenced from lambdas, so it never loads on a dedicated server. */
 public final class ClientPayloadHandler {
 
-    public static void onOpenClassSelection() {
-        Minecraft.getInstance().setScreen(new ClassSelectionScreen());
+    public static void onOpenClassSelection(boolean respec) {
+        Minecraft.getInstance().setScreen(new ClassSelectionScreen(respec));
     }
 
     public static void onCircuitAssigned(ModPayloads.CircuitAssigned payload) {

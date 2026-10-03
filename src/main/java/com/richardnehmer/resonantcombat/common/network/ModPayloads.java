@@ -12,9 +12,11 @@ import net.minecraft.resources.ResourceLocation;
 public final class ModPayloads {
 
     // ================= onboarding / profile =================
-    public record OpenClassSelection() implements CustomPacketPayload {
+    /** respec = true: opened by a Class Sigil, so the screen may be cancelled. */
+    public record OpenClassSelection(boolean respec) implements CustomPacketPayload {
         public static final Type<OpenClassSelection> TYPE = new Type<>(ResonantCombat.id("open_class_selection"));
-        public static final StreamCodec<ByteBuf, OpenClassSelection> CODEC = StreamCodec.unit(new OpenClassSelection());
+        public static final StreamCodec<ByteBuf, OpenClassSelection> CODEC =
+                ByteBufCodecs.BOOL.map(OpenClassSelection::new, OpenClassSelection::respec);
         @Override public Type<? extends CustomPacketPayload> type() { return TYPE; }
     }
 

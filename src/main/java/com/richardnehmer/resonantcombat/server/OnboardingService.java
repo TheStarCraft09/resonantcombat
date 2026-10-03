@@ -22,7 +22,7 @@ public final class OnboardingService {
     public static void onJoin(ServerPlayer player) {
         ModNetwork.syncProfile(player);
         if (!player.getData(ModAttachments.PROFILE).isOnboardingComplete()) {
-            PacketDistributor.sendToPlayer(player, new ModPayloads.OpenClassSelection());
+            PacketDistributor.sendToPlayer(player, new ModPayloads.OpenClassSelection(false));
         }
     }
 
@@ -31,14 +31,20 @@ public final class OnboardingService {
 
         // Duplicate/forged packet after onboarding finished: ignore (prevents rerolls and kit duplication).
         if (profile.isOnboardingComplete()) {
-            ResonantCombat.LOGGER.debug("{} sent a class selection after onboarding; ignored", player.getGameProfile().getName());
+            // either a confirmed class respec (Class Sigil) or a stray/forged packet; RespecService decides
+            RespecService.Result result = RespecService.completeClassRespec(player, classId);
+            if (result == RespecService.Result.NOT_PENDING) {
+                ResonantCombat.LOGGER.debug("{} sent a class selection with no pending respec; ignored", player.getGameProfile().getName());
+            } else if (result != RespecService.Result.OK) {
+                RespecService.notify(player, result);
+            }
             return;
         }
 
         WeaponClassDefinition def = ModRegistries.weaponClasses(player.level().registryAccess()).get(classId);
         if (def == null) {
             ResonantCombat.LOGGER.warn("{} selected unknown class {}", player.getGameProfile().getName(), classId);
-            PacketDistributor.sendToPlayer(player, new ModPayloads.OpenClassSelection());
+            PacketDistributor.sendToPlayer(player, new ModPayloads.OpenClassSelection(false));
             return;
         }
 
@@ -46,7 +52,7 @@ public final class OnboardingService {
         Optional<ResourceLocation> circuit = CircuitAssignmentService.roll(player.level().registryAccess(), classId, seed, Set.of());
         if (circuit.isEmpty()) {
             player.sendSystemMessage(Component.translatable("message.resonantcombat.no_circuits", ModRegistries.className(classId)));
-            PacketDistributor.sendToPlayer(player, new ModPayloads.OpenClassSelection());
+            PacketDistributor.sendToPlayer(player, new ModPayloads.OpenClassSelection(false));
             return;
         }
 

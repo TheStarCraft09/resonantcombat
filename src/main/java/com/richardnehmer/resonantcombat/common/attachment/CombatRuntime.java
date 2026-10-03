@@ -52,6 +52,9 @@ public class CombatRuntime {
     public long markEnd;
     public float markBonus = 1.25F;
 
+    /** Game time until which a class respec (Class Sigil) may be confirmed. 0 = none pending. */
+    public long pendingClassRespecUntil;
+
     /** Per-intent rate limiting. */
     public final long[] lastIntentTick = new long[8];
 

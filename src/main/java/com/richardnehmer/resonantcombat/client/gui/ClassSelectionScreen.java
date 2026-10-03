@@ -30,8 +30,11 @@ public class ClassSelectionScreen extends Screen {
     private Entry selected;
     private Button confirmButton;
 
-    public ClassSelectionScreen() {
+    private final boolean respec;
+
+    public ClassSelectionScreen(boolean respec) {
         super(Component.translatable("screen.resonantcombat.class_selection.title"));
+        this.respec = respec;
     }
 
     @Override
@@ -100,6 +103,7 @@ public class ClassSelectionScreen extends Screen {
                 panelX, this.height - 70, panelWidth, 0xFF6E6E);
     }
 
-    @Override public boolean shouldCloseOnEsc() { return false; }
+    /** First-join selection cannot be dismissed; a respec (Class Sigil) can be cancelled for free. */
+    @Override public boolean shouldCloseOnEsc() { return respec; }
     @Override public boolean isPauseScreen() { return false; }
 }

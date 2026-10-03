@@ -19,7 +19,7 @@ public final class ModNetwork {
 
         // ---- server -> client (lambdas keep ClientPayloadHandler off dedicated servers) ----
         registrar.playToClient(ModPayloads.OpenClassSelection.TYPE, ModPayloads.OpenClassSelection.CODEC,
-                (payload, ctx) -> ClientPayloadHandler.onOpenClassSelection());
+                (payload, ctx) -> ClientPayloadHandler.onOpenClassSelection(payload.respec()));
         registrar.playToClient(ModPayloads.CircuitAssigned.TYPE, ModPayloads.CircuitAssigned.CODEC,
                 (payload, ctx) -> ClientPayloadHandler.onCircuitAssigned(payload));
         registrar.playToClient(ModPayloads.ProfileSync.TYPE, ModPayloads.ProfileSync.CODEC,

@@ -17,7 +17,7 @@ import java.util.Optional;
  *
  * PHASE 0 CHECKLIST - verify against the pinned EF version (run /resonantcombat debug state):
  *  1. EpicFightCapabilities.getEntityPatch(player, ServerPlayerPatch.class) returns non-null
- *  2. ServerPlayerPatch#isBattleMode() exists
+ *  2. ServerPlayerPatch#isEpicFightMode() exists (confirmed by probe on Epic Fight 21.17.3)
  *  3. EpicFightCapabilities.getItemStackCapability(stack).getWeaponCategory() exists and its toString()
  *     yields the lower-case category name (sword, longsword, greatsword, tachi, ...). With WeaponCategory
  *     inheritance this may need to change to an explicit isWeaponCategory(...) style check.

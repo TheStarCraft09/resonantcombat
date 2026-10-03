@@ -148,7 +148,7 @@ public final class ModCommands {
         profile.clearClassAndCircuit();
         profile.setOnboardingComplete(false);
         ModNetwork.syncProfile(p);
-        PacketDistributor.sendToPlayer(p, new ModPayloads.OpenClassSelection());
+        PacketDistributor.sendToPlayer(p, new ModPayloads.OpenClassSelection(false));
         ctx.getSource().sendSuccess(() -> Component.literal("Reset " + p.getGameProfile().getName() + "; onboarding reopened"), true);
         return 1;
     }

@@ -1,18 +1,23 @@
 package com.richardnehmer.resonantcombat.client.hud;
 
 import com.richardnehmer.resonantcombat.client.ClientActionState;
+import com.richardnehmer.resonantcombat.client.ClientEpicFightBridge;
 import com.richardnehmer.resonantcombat.client.ClientKeyMappings;
 import com.richardnehmer.resonantcombat.client.ClientProfileCache;
 import com.richardnehmer.resonantcombat.common.attachment.PlayerProfile;
 import com.richardnehmer.resonantcombat.common.data.AbilityDefinition;
 import com.richardnehmer.resonantcombat.common.data.CombatCircuitDefinition;
 import com.richardnehmer.resonantcombat.common.registry.ModRegistries;
+import com.richardnehmer.resonantcombat.common.registry.WeaponClassResolver;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.multiplayer.ClientPacketListener;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import java.util.Optional;
 
 /** Skill / Ultimate / Echo boxes above the Resonance bars (design doc 5.5). Placeholder visuals until icons exist. */
 public final class AbilityHudOverlay {
@@ -29,6 +34,7 @@ public final class AbilityHudOverlay {
         if (circuit == null) return;
         var abilities = ModRegistries.abilities(connection.registryAccess());
         long now = mc.level.getGameTime();
+        warnWrongWeapon(g, mc, connection, profile);
         int x = 10, y = g.guiHeight() - 48 - BOX - 6;
 
         // ---- skill ----
@@ -51,6 +57,16 @@ public final class AbilityHudOverlay {
             box(g, mc, x + 2 * (BOX + 4), y, ClientKeyMappings.ECHO, echoId, charges > 0 ? 0xFFB388FF : 0xFF555555,
                     cooldown(2, now), null, "x" + charges + (echo != null ? "/" + echo.maxCharges() : ""));
         }
+    }
+
+    /** Design doc 5.5: tell the player when the held weapon does not activate the selected Circuit. */
+    private static void warnWrongWeapon(GuiGraphics g, Minecraft mc, ClientPacketListener connection, PlayerProfile profile) {
+        ItemStack held = mc.player.getMainHandItem();
+        if (held.isEmpty() || !ClientEpicFightBridge.isEpicFightMode()) return;
+        Optional<ResourceLocation> heldClass = WeaponClassResolver.resolve(connection.registryAccess(), held);
+        if (heldClass.equals(profile.selectedClass())) return;
+        g.drawCenteredString(mc.font, Component.translatable("hud.resonantcombat.wrong_weapon",
+                ModRegistries.className(profile.selectedClass().orElseThrow())), g.guiWidth() / 2, g.guiHeight() - 62, 0xFFFF8A65);
     }
 
     private static float cooldown(int slot, long now) {

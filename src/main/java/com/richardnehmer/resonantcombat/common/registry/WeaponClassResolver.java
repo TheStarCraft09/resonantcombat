@@ -26,7 +26,7 @@ public final class WeaponClassResolver {
         Item item = stack.getItem();
 
         // 1+2. Explicit override via data map (covers item ids and #tags)
-        WeaponClassEntry mapped = item.builtInRegistryHolder().getData(ModDataMaps.WEAPON_CLASS);
+        WeaponClassEntry mapped = stack.getItemHolder().getData(ModDataMaps.WEAPON_CLASS);
         if (mapped != null) return Optional.of(mapped.weaponClass());
 
         // 3. Epic Fight weapon category -> class (declared in each weapon_class definition)
